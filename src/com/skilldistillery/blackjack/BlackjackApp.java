@@ -10,62 +10,66 @@ import com.skilldistillery.blackjack.entities.BlackjackTable;
 
 public class BlackjackApp {
 	private boolean isRunning = true;
+
 	public static void main(String[] args) {
 		BlackjackApp app = new BlackjackApp();
-		while(app.isRunning) {
+		while (app.isRunning) {
 			app.run();
-			
+
 		}
 	}
 
 	public void run() {
 		BlackjackTable table = new BlackjackTable();
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Would you like to play Blackjack?");
 		boolean isPlaying = continuePlay(sc.nextLine(), sc);
-		
-		if(isPlaying) {
+
+		if (isPlaying) {
 			System.out.println("What is your name?");
-			BlackjackPlayer temp = (BlackjackPlayer)table.getContestants().get(0);
+			BlackjackPlayer temp = (BlackjackPlayer) table.getContestants().get(0);
 			table.setPlayer(sc.nextLine(), temp);
 			table.setUpGame();
 			System.out.println(temp.getHand());
 		} else {
 			isRunning = false;
 		}
-		while(isPlaying) {
-			while(!table.hasWinner()) {
-				
+		
+		while (isPlaying) {
+			while (!table.hasWinner()) {
+
 				int selection;
-			for (Contestant contestant : table.getContestants()) {
-				if (contestant instanceof Player) {
-					((BlackjackPlayer)contestant).setHolding(false);
-					table.printTurnMenu();
-					
+				for (Contestant contestant : table.getContestants()) {
+					if (contestant instanceof Player) {
+						((BlackjackPlayer) contestant).setHolding(false);
+						table.printTurnMenu();
+
 						selection = table.turnSwitch(sc.nextLine(), sc);
 						table.turn(selection, contestant);
-					
-					BlackjackPlayer temp = (BlackjackPlayer)contestant;
-					System.out.println(((BlackjackPlayer)contestant).getName()
-							+ " " + temp.getHand());
-					
-				} else {
-					if (!table.hasWinner()) {
-						BlackjackDealer tempDealer = (BlackjackDealer)contestant;
-						System.out.println("Dealer is showing: " + tempDealer.cardsShowing());
-					selection = table.dealerSwitch();
-					table.turn(selection, contestant);
+						
+						if (!table.hasWinner()) {
+						System.out.println(contestant + "\n" 
+								+ ((BlackjackPlayer)contestant).getHand());
+						}
+
+					} else {
+						if (!table.hasWinner()) {
+							BlackjackDealer tempDealer = (BlackjackDealer) contestant;
+							System.out.println("Dealer is showing: \n" 
+									+ tempDealer.cardsShowing());
+							selection = table.dealerSwitch();
+							table.turn(selection, contestant);
+						}
+
 					}
-					
 				}
 			}
-			}
-			isPlaying = false;
 			
+			isPlaying = false;
+
 		}
-		
-		
+
 	}
 
 	public boolean continuePlay(String input, Scanner sc) {
@@ -90,17 +94,10 @@ public class BlackjackApp {
 				System.out.println("Please enter a valid option: ");
 				input = sc.nextLine();
 				continue;
-			
+
 			}
 		}
 		return false;
-	}
-
-
-
-	public void setUp(Scanner sc) {
-		
-
 	}
 
 }

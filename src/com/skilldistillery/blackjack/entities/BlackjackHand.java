@@ -11,7 +11,7 @@ public class BlackjackHand extends Hand {
 		for (Card card : hand) {
 			handValue += card.getValue();
 		}
-		if (containsAce()) {
+		if (handValue > 21 && containsAce()) {
 			handValue -= 10;
 		}
 			
@@ -41,12 +41,5 @@ public class BlackjackHand extends Hand {
 		return false;
 	}
 	
-	
-	private boolean aceIsHard() {
-		if (getHandValue() < 21) {
-			return true;
-		}
-		return false;
-	}
 
 }

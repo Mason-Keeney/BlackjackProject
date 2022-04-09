@@ -23,12 +23,14 @@ public class BlackjackTable extends Table {
 	public Contestant assessStayWinner() {
 		Contestant winner = null;
 		int winningValue = 0;
-		for (Contestant contestant : players) {
-			if (contestant.getHandValue() > winningValue) {
-				winningValue = contestant.getHandValue();
-				winner = contestant;
+		
+		for (Contestant player : players) {
+			if (player.getHandValue() > winningValue) {
+				winningValue = player.getHandValue();
+				winner = player;
 			}
 		}
+		
 		hasWinner = true;
 		return winner;
 	}
@@ -45,20 +47,8 @@ public class BlackjackTable extends Table {
 		player.setName(name);
 	}
 
-	public boolean checkForBust(Contestant contestant) {
-		if (contestant.hasLosingHand()) {
-			playerBusts(contestant);
-			return true;
-		} 
-		return false;
-	}
 
-	public boolean checkForWin(Contestant contestant) {
-		if (contestant.hasWinningHand()) {
-			return true;
-		}
-		return false;
-	}
+	
 
 	public void playerWins(Contestant contestant) {
 
@@ -68,13 +58,14 @@ public class BlackjackTable extends Table {
 			hasWinner = true;
 		} else {
 			System.out.println("The house wins.");
-			System.out.println("Dealer " + ((BlackjackDealer)contestant).getHand());
+			System.out.println("Dealer won with: " + ((BlackjackDealer)contestant).getHand());
 			hasWinner = true;
 		}
 		
 	}
 
 	private void playerBusts(Contestant contestant) {
+		System.out.println("Bust!");
 		players.remove(contestant);
 		Contestant winner = assessBoard();
 		if (winner != null) {
@@ -104,13 +95,18 @@ public class BlackjackTable extends Table {
 		switch (selection) {
 		case 1:
 			((BlackjackDealer) dealer).dealCard(contestant);
-			if (checkForWin(contestant)) {
+			
+			boolean wins = contestant.hasWinningHand();
+			if (wins) {
 				playerWins(contestant);
 			}
-			if(checkForBust(contestant)) {
+			
+			boolean busts = contestant.hasLosingHand();
+			if(busts) {
 				playerBusts(contestant);
 			}
 			break;
+			
 		case 2:
 			if (contestant instanceof Player) {
 				((BlackjackPlayer) contestant).setHolding(true);
@@ -119,7 +115,7 @@ public class BlackjackTable extends Table {
 				if (allContestantsHold()) {
 					Contestant winner = assessStayWinner();
 					if (winner != null) {
-						playerWins(contestant);
+						playerWins(winner);
 					}
 				}
 			}
@@ -184,7 +180,8 @@ public class BlackjackTable extends Table {
 			((BlackjackDealer)dealer).dealHand(contestant);
 		}
 		for(Contestant contestant : players) {
-			if(checkForWin(contestant)) {
+			boolean wins = contestant.hasWinningHand();
+			if(wins) {
 				playerWins(contestant);
 			}
 		}

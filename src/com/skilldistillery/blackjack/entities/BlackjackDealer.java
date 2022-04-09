@@ -79,7 +79,7 @@ public class BlackjackDealer extends Dealer implements Contestant {
 
 	@Override
 	public int getHandValue() {
-		return hand.getHandValue();
+		return hand.getHandValue() - 1;
 	}
 
 	@Override

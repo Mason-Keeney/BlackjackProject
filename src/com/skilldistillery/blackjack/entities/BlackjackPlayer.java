@@ -55,6 +55,8 @@ public class BlackjackPlayer extends Player {
 	public void setHolding(boolean decision) {
 		if (decision) {
 			isHolding = true;
+		} else {
+			isHolding = false;
 		}
 	}
 	

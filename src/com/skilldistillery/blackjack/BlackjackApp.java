@@ -40,22 +40,24 @@ public class BlackjackApp {
 				int selection;
 			for (Contestant contestant : table.getContestants()) {
 				if (contestant instanceof Player) {
+					((BlackjackPlayer)contestant).setHolding(false);
 					table.printTurnMenu();
-					selection = table.turnSwitch(sc.nextLine(), sc);
-					table.turn(selection, contestant);
+					
+						selection = table.turnSwitch(sc.nextLine(), sc);
+						table.turn(selection, contestant);
+					
 					BlackjackPlayer temp = (BlackjackPlayer)contestant;
-					System.out.println(((BlackjackPlayer)contestant).getName()+ " " + temp.getHand());
-					if (table.hasWinner()) {
-						continue;
-					}
+					System.out.println(((BlackjackPlayer)contestant).getName()
+							+ " " + temp.getHand());
+					
 				} else {
+					if (!table.hasWinner()) {
+						BlackjackDealer tempDealer = (BlackjackDealer)contestant;
+						System.out.println("Dealer is showing: " + tempDealer.cardsShowing());
 					selection = table.dealerSwitch();
 					table.turn(selection, contestant);
-					BlackjackDealer tempDealer = (BlackjackDealer)contestant;
-					System.out.println("Dealer " + tempDealer.cardsShowing());
-					if (table.hasWinner()) {
-						continue;
 					}
+					
 				}
 			}
 			}

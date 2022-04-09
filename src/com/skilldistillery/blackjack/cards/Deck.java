@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.skilldistillery.blackjack.abstractclasses.Hand;
+
 public class Deck {
 	private List<Card> cards;
 
@@ -32,6 +34,10 @@ public class Deck {
 
 	public int cardsLeftInDeck() {
 		return cards.size();
+	}
+	
+	public void dealCard(Hand hand) {
+		hand.addCard(cards.remove(0));
 	}
 
 	

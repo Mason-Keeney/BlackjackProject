@@ -8,12 +8,14 @@ import com.skilldistillery.blackjack.cards.Deck;
 
 public class BlackjackDealer extends Dealer implements Contestant {
 	private Hand hand;
+	private String name;
 	private final int initialHandSize = 2;
 
 	public BlackjackDealer() {
 		deck = new Deck();
 		deck.shuffle();
 		hand = new BlackjackHand();
+		name = "Dealer";
 	}
 
 	@Override
@@ -44,7 +46,9 @@ public class BlackjackDealer extends Dealer implements Contestant {
 	}
 
 	public void dealCard(Contestant contestant) {
-		contestant.draws(deck.dealCard());
+		Card temp = deck.dealCard();
+		contestant.draws(temp);
+		System.out.println(contestant + " recieved " + temp);
 	}
 	
 	public Hand cardsShowing() {
@@ -79,7 +83,7 @@ public class BlackjackDealer extends Dealer implements Contestant {
 
 	@Override
 	public int getHandValue() {
-		return hand.getHandValue() - 1;
+		return hand.getHandValue();
 	}
 
 	@Override
@@ -89,5 +93,12 @@ public class BlackjackDealer extends Dealer implements Contestant {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 
 }

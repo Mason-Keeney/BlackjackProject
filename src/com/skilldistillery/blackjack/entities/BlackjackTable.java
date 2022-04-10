@@ -87,7 +87,7 @@ public class BlackjackTable extends Table {
 	public void playerWins(Contestant contestant) {
 
 		if (contestant instanceof Player) {
-			System.out.println(((Player) contestant).getName() + " Wins!");
+			System.out.println(((Player) contestant).getName() + " wins with: ");
 			System.out.println(((Player) contestant).getHand());
 			hasWinner = true;
 		} else {
@@ -137,8 +137,10 @@ public class BlackjackTable extends Table {
 
 	public int dealerSwitch() {
 		if (((BlackjackDealer) dealer).isHolding()) {
+			System.out.println(dealer + " stays");
 			return 2;
 		}
+		System.out.println(dealer + " hits");
 		return 1;
 	}
 

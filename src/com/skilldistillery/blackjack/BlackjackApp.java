@@ -14,28 +14,35 @@ public class BlackjackApp {
 	public static void main(String[] args) {
 		BlackjackApp app = new BlackjackApp();
 		while (app.isRunning) {
-			app.run();
-
+				app.run();
 		}
-	}
+	
 
+	}
+	
 	public void run() {
 		BlackjackTable table = new BlackjackTable();
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Would you like to play Blackjack?");
+		System.out.println("Would you like to play Blackjack? (Y/N)");
 		boolean isPlaying = continuePlay(sc.nextLine(), sc);
 
 		if (isPlaying) {
 			System.out.println("What is your name?");
 			BlackjackPlayer temp = (BlackjackPlayer) table.getContestants().get(0);
+			BlackjackDealer tempDealer = (BlackjackDealer) table.getContestants().get(1);
 			table.setPlayer(sc.nextLine(), temp);
 			table.setUpGame();
-			System.out.println(temp.getHand());
+			if (!table.hasWinner()) {
+				System.out.println(temp + "'s hand \n" + temp.getHand());
+				System.out.println("The dealer is showing:\n" + tempDealer.cardsShowing() 
+					+ "One Card in the Hole\n");
+				
+			}
 		} else {
 			isRunning = false;
 		}
-		
+
 		while (isPlaying) {
 			while (!table.hasWinner()) {
 
@@ -49,23 +56,25 @@ public class BlackjackApp {
 						table.turn(selection, contestant);
 						
 						if (!table.hasWinner()) {
-						System.out.println(contestant + "\n" 
-								+ ((BlackjackPlayer)contestant).getHand());
+							System.out.println(contestant + "\n" + ((BlackjackPlayer) contestant).getHand());
 						}
 
 					} else {
 						if (!table.hasWinner()) {
-							BlackjackDealer tempDealer = (BlackjackDealer) contestant;
-							System.out.println("Dealer is showing: \n" 
-									+ tempDealer.cardsShowing());
 							selection = table.dealerSwitch();
 							table.turn(selection, contestant);
+							if (!table.hasWinner()) {
+								BlackjackDealer tempDealer = (BlackjackDealer) contestant;
+								System.out.println(
+										"Dealer is showing: \n" + tempDealer.cardsShowing() 
+											+ "One card in the Hole\n");
+							}
 						}
 
 					}
 				}
 			}
-			
+
 			isPlaying = false;
 
 		}

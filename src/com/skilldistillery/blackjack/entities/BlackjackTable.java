@@ -99,7 +99,7 @@ public class BlackjackTable extends Table {
 	}
 
 	private void playerBusts(Contestant contestant) {
-		System.out.println("Bust!");
+		System.out.println("Bust!\n");
 		players.remove(contestant);
 		Contestant winner = assessBoard();
 		if (winner != null) {
@@ -137,7 +137,7 @@ public class BlackjackTable extends Table {
 
 	public int dealerSwitch() {
 		if (((BlackjackDealer) dealer).isHolding()) {
-			System.out.println(dealer + " stays");
+			System.out.println(dealer + " stays\n");
 			return 2;
 		}
 		System.out.println(dealer + " hits");

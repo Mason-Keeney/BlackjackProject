@@ -42,12 +42,11 @@ public abstract class Hand {
 		StringBuilder sb = new StringBuilder();
 		int i = 1;
 		String handToString = "";
-	
 		for (Card card : hand) {
-			sb.append("Card " + i + ": " + card + "\n");
-			i++;
+			sb.append( "[" + card + "]    ");
+			
 		}
-	
+		sb.replace(sb.length() -4, sb.length(), "");
 		handToString = sb.toString();
 		return handToString;
 	}

@@ -31,21 +31,21 @@ public class BlackjackApp {
 
 			while (!table.hasWinner()) {
 				for (Contestant contestant : table.getContestants()) {
+					
 					if (contestant instanceof Player) {
-						
 						playerTurn(contestant, table, sc);
-						
 						if (table.hasWinner()) {
 							break;
 						}
 						
 					} else {
-						
 						dealerTurn(contestant, table, sc);
-						
 					}
+				
 				}
+			
 			}
+		
 		} else {
 			isRunning = false;
 		}
@@ -116,7 +116,7 @@ public class BlackjackApp {
 		table.turn(selection, dealer);
 		if (!table.hasWinner()) {
 			BlackjackDealer tempDealer = (BlackjackDealer) dealer;
-			System.out.println("Dealer is showing: \n" + tempDealer.cardsShowing() + "One card in the Hole\n");
+			System.out.println("Dealer is showing: \n" + tempDealer.cardsShowing() + "    [Hidden Card]\n");
 		}
 
 	}
